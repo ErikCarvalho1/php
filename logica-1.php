@@ -41,10 +41,11 @@ echo "A temperatura de hoje é $temp °C "
 ?>
 <!-- exercicio 7 -->
 <?php 
-$primeiroNome = "Carvalho";
-$sobrenomeNome = "Silva"
-$nomeCompleto = 
-echo er
+$primeiroNome = "erik";
+$sobrenomeNome = "Silva";
+$nomeCompleto = "$primeiroNome"." "."$sobrenomeNome";
+echo $nomeCompleto;
+
 ?>
 
 <!-- exercicio 8 -->
@@ -60,19 +61,27 @@ echo er
 
 <!-- exercicio 9 -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<?php 
+ $produto = "Notebook";
+ $preco = 3500.50;
+ echo "O produto Notebook custa R$$preco"
 ?>
+
+
+
+<!-- exercicio 10 -->
+<?php 
+ $nota1 = 10; 
+ $nota2 = 5;
+ $nota3 = 6;
+ $media =  $nota1 +  $nota2 +  $nota3 / 3;
+ echo $media;
+?>
+
+
+
+
+
+
+
+
