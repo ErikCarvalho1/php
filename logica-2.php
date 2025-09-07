@@ -143,9 +143,20 @@ echo "A soma dos valores é: $soma <br>";
 echo "<br>";
 
 #18 Crie um laço de repetição aninhado para imprimir um padrão de asteriscos em formato de pirâmide.
+$linhas = 5;
+for ($i=1; $i <= $linhas ; $i++) { 
+    for ($j=1; $j <= $linhas - $i ; $j++) { 
+        echo " ";
+    }
+    for ($k=1; $k <= (2 * $i - 1) ; $k++) { 
+        echo "*";
+    }
+    echo "<br>";
+}
 
+echo "<br>";
 #19Crie um programa que conte quantas vogais existem em uma string fornecida pelo usuário.
-$frase = "Exemplo de frase";
+$frase = "vai tomando ";
 $vogais = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'];
 $contador = 0;  
 for ($i=0; $i < strlen($frase) ; $i++) { 
