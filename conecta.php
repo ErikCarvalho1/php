@@ -13,7 +13,7 @@ try {
         $stmt = $pdo->prepare("INSERT INTO usuarios (nome, email, datacad) VALUES (:nome, :email, NOW())");
         $stmt->bindParam(':nome', $nome);
         $stmt->bindParam(':email', $email);
-        // $stmt->bindParam(':senha', $senha);
+    
 
         if ($stmt->execute()) {
             $mensagem = "<div class='alert alert-success'>Usuário cadastrado com sucesso!</div>";
