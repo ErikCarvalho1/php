@@ -1,10 +1,23 @@
 <?php
 
-$mensagem = "";
-try {
-    $pdo = new PDO("mysql:host=10.91.47.99;dbname=modelophp_db","root", "123");
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  
+function abrirBanco() {
+    $host = "10.91.47.99";    
+    $dbname = "modelophp_db"; 
+    $usuario = "root";        
+    $senha = "123"; 
 
+    try {
+        $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $usuario, $senha);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  
+        return $pdo;
+    } catch (PDOException $e) {
+        die("Erro ao conectar ao banco: " . $e->getMessage());
+    }
+}
+?>
+
+<?php 
+    $pdo = abrirBanco();
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nome']) && isset($_POST['email'])) {
         $nome  = $_POST['nome'];
         $email = $_POST['email'];
@@ -21,8 +34,24 @@ try {
             $mensagem = "<div class='alert alert-danger'>Erro ao cadastrar usuário.</div>";
         }
     }
-} catch (PDOException $e) {
-    $mensagem = "<div class='alert alert-danger'>Erro: " . $e->getMessage() . "</div>";
+?>
+
+<?php 
+$pdo = abrirBanco();
+if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nome']) && isset($_POST['preco'])){
+    $nome = $_POST['nome'];
+    $preco = $_POST['preco'];
+
+    $stmt = $pdo->prepare("INSERT INTO produtos (nome, preco) VALUES (:nome, :preco)");
+    $stmt->bindParam(':nome', $nome);
+    $stmt->bindParam(':preco', $preco);
+
+    if ($stmt->execute()) {
+            $msgProduto = "<div class='alert alert-success'>Produto cadastrado com sucesso!</div>";
+        } else {
+            $msgProduto = "<div class='alert alert-danger'>Erro ao cadastrar usuário.</div>";
+        }
+    
 }
 ?>
 
@@ -62,4 +91,47 @@ try {
             </div>
         </div>
     </div>
+    <!-- -------------------------------------     PRODUTO   ------------------------------------------------------------------- -->
+    <div class="card shadow">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4>CAdastro de produtos</h4>
+                </div>
+                <div class="card-body">
+                    <?php if (!empty($msgProduto)) echo $msgProduto; ?>
+                    <form method="post">
+                        <div class="mb-3">
+                            <label class="form-label">Nome do Produto</label>
+                            <input type="text" name="nome" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Preço</label>
+                            <input type="number" name="preco" class="form-control" required>
+                        </div>
+                       
+                        <button type="submit" name="cadastrar" class="btn btn-primary w-100">Cadastrar</button>
+                    </form>
+                </div>
+            </div>
 </div>
+
+
+
+
+<?php
+
+$pdo = abrirBanco();
+
+    $stmt = $pdo->prepare("select * from produtos LIMIT 5");
+    $stmt->bindParam(':nome', $nome);
+    $stmt->bindParam(':preco', $preco);
+
+    if ($stmt->execute()) {
+            $msgProduto = "<div class='alert alert-success'>Produto cadastrado com sucesso!</div>";
+        } else {
+            $msgProduto = "<div class='alert alert-danger'>Erro ao cadastrar usuário.</div>";
+        }
+    
+
+?>
+
+?>
