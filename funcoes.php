@@ -6,7 +6,7 @@ function formatarPreco(float $valor):string{
 
 }
 //inserindo produtos
-function InseririrProduto(string $nome, float $preco):bool{
+function InserirProduto(string $nome, float $preco):bool{
     $pdo = getConnection(); 
     $cmd = $pdo->prepare("INSERT INTO produtos (nome, preco) values(:nome, :preco)");
     return $cmd->execute([":nome"=>$nome, ":preco"=>$preco]);
@@ -15,8 +15,8 @@ function InseririrProduto(string $nome, float $preco):bool{
 //listando produtos...
 function listarProdutos():array{
     $pdo = getConnection();
-    $cmd = $pdo->query("select * from produtos order by desc");
-    return $cmd->fetch();
+    $cmd = $pdo->query("select * from produtos order by id desc");
+    return $cmd->fetchAll();
 }
 
 //listra produtos com id...
@@ -31,14 +31,14 @@ function buscarProdutoPorId(int $id):?array{
 // Editando o produto 
 function editarProduto(int $id, string $nome, float $preco):bool{
     $pdo = getConnection();
-    $cmd = $pdo->prepare("update produtos set nome = :nome, :preco = :preco where id = :id");
+    $cmd = $pdo->prepare("update produtos set nome = :nome, preco = :preco where id = :id");
     return $cmd->execute([":nome"=>$nome, ":preco"=>$preco, ":id"=>$id]);
 
 }
 // excluindo o produto 
 function excuirProduto(int $id):bool{
-    $pdo = getConnection();
+    $pdo =getConnection();
     $cmd = $pdo->prepare("DELETE FROM produtos WHERE id = :id");
-    return $cmd->execute(":id=>$id");
+    return $cmd->execute([":id" => $id]);
 }
 ?>
